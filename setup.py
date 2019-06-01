@@ -42,7 +42,7 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/aldnav/geohash',
-    version='0.1.0',
+    version='0.1.1',
     zip_safe=False,
     cffi_modules=["geohash/geohash_build.py:ffi"],  # @TODO: cffi_modules here
 )
