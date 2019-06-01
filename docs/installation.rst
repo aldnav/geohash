@@ -12,7 +12,7 @@ To install Geohash, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install geohash
+    $ pip install geohashcx
 
 This is the preferred method to install Geohash, as it will always install the most recent stable release.
 
