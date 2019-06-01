@@ -4,5 +4,5 @@
 
 __author__ = """Aldrin Navarro"""
 __email__ = 'aldrinnavarro16@gmail.com'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 name = "geohash"
