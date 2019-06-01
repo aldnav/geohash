@@ -32,6 +32,7 @@ Features
 
 .. code-block:: python
 
+    from geohash import geohash_encode
     print(geohash_encode(35.689487, 139.691706))
     # xn774c <- hash for Tokyo, Japan
 
@@ -39,6 +40,7 @@ Features
 
 .. code-block:: python
 
+    from geohash import geohash_decode
     paris = geohash_decode('u09tvw')
     print(paris.latitude, paris.longitude)
     # 48.856614, 2.352222

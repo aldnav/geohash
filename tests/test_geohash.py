@@ -4,7 +4,7 @@
 """Tests for `geohash` package."""
 
 import pytest
-from geohash import geohash
+import geohash
 
 geohash_map = (
     ((35.689487, 139.691706), "xn774c"),
