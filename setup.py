@@ -36,7 +36,7 @@ setup(
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='geohash',
-    name='geohash',
+    name='geohashcx',
     packages=find_packages(include=['geohash']),
     setup_requires=setup_requirements,
     test_suite='tests',
