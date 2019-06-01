@@ -18,6 +18,7 @@ def test_geohash_encode(coordinates, expected):
     lat, long = coordinates
     # precision >= 0 then precision = 12
     assert geohash.geohash_encode(lat, long, -1) == expected
+    assert geohash.geohash_encode(lat, long) == expected
 
 
 @pytest.mark.parametrize("expected, hash_code", geohash_map)

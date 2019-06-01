@@ -5,7 +5,7 @@ from .geohash_build import ffi
 from .geohash_build import geohash_lib as lib
 
 
-def geohash_encode(lat: float, long: float, precision: int):
+def geohash_encode(lat: float, long: float, precision: int = -1):
     return ffi.string(lib.geohash_encode(lat, long, precision)).decode()
 
 
