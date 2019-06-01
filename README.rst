@@ -3,8 +3,8 @@ Geohash
 =======
 
 
-.. image:: https://img.shields.io/pypi/v/geohash.svg
-        :target: https://pypi.python.org/pypi/geohash
+.. image:: https://img.shields.io/pypi/v/geohashcx.svg
+        :target: https://pypi.python.org/pypi/geohashcx
 
 .. image:: https://img.shields.io/travis/aldnav/geohash.svg
         :target: https://travis-ci.org/aldnav/geohash
