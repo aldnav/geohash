@@ -9,8 +9,8 @@ Geohash
 .. image:: https://img.shields.io/travis/aldnav/geohash.svg
         :target: https://travis-ci.org/aldnav/geohash
 
-.. image:: https://readthedocs.org/projects/geohash/badge/?version=latest
-        :target: https://geohash.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/geohashcx/badge/?version=latest
+        :target: https://geohashcx.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 
@@ -22,7 +22,7 @@ Wraps Derek Smith `libgeohash`. See https://github.com/simplegeo/libgeohash for 
 
 
 * Free software: GNU General Public License v3
-* Documentation: https://geohash.readthedocs.io.
+* Documentation: https://geohashcx.readthedocs.io.
 
 
 Features
