@@ -107,3 +107,6 @@ ENV/
 _geohash.py
 !geohash/bin/linux/*.so
 !geohash/bin/darwin/**/*.so
+
+# xml test reports
+reports/

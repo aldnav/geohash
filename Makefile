@@ -59,6 +59,9 @@ test: ## run tests quickly with the default Python
 test-all: ## run tests on every Python version with tox
 	tox
 
+test-report:  ## run test with reporting
+	py.test -v --junitxml=reports/result.xml
+
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source geohash -m pytest
 	coverage report -m
