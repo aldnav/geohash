@@ -56,7 +56,7 @@ jobs:
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '3.10'
-      displayName: 'Use Python $(python.version)'
+      displayName: 'Use Python 3.10'
 
     - task: PythonScript@0
       displayName: 'Testing variables and parameters'
