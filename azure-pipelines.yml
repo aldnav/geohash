@@ -10,64 +10,59 @@ pool:
   vmImage: ubuntu-latest
 
 parameters:
-  - name: PARALLEL_RUNS
-    type: number
-    displayName: "Number of testing jobs to run in parallel"
-    default: "6"
-    values:
-      - 1
-      - 2
-      - 4
-      - 6
-      - 8
-      - 10
-      - 12
-      - 14
-      - 16
-      - 18
-      - 20
-  - name: NUM_BATCHES
-    type: number
-    displayName: "Number of batches or splits"
-    default: "12"
-    values:
-      - 1
-      - 2
-      - 4
-      - 6
-      - 8
-      - 10
-      - 12
-      - 14
-      - 16
-      - 18
-      - 20
+  - name: STRATEGY
+    type: object
+    displayName: "Test strategy"
+    default:
+        maxParallel: 6
+        matrix:
+            Batch1:
+              RUN_NUMBER: 1
+            Batch2:
+              RUN_NUMBER: 2
+            Batch3:
+              RUN_NUMBER: 3
+            Batch4:
+              RUN_NUMBER: 4
+            Batch5:
+              RUN_NUMBER: 5
+            Batch6:
+              RUN_NUMBER: 6
+            Batch7:
+              RUN_NUMBER: 7
+            Batch8:
+              RUN_NUMBER: 8
+            Batch9:
+              RUN_NUMBER: 9
+            Batch10:
+              RUN_NUMBER: 10
+            Batch11:
+              RUN_NUMBER: 11
+            Batch12:
+              RUN_NUMBER: 12
+            Batch13:
+              RUN_NUMBER: 13
+            Batch14:
+              RUN_NUMBER: 14
+            Batch15:
+              RUN_NUMBER: 15
+            Batch16:
+              RUN_NUMBER: 16
+            Batch17:
+              RUN_NUMBER: 17
+            Batch18:
+              RUN_NUMBER: 18
+            Batch19:
+              RUN_NUMBER: 19
+            Batch20:
+              RUN_NUMBER: 20
 
 jobs:
-- job: PreBuild
-  displayName: Prepare test matrix
-  steps:
-  - task: PythonScript@0
-    displayName: 'Export project path'
-    inputs:
-      scriptSource: 'inline'
-      script: |
-        """Set strategy matrix,maxParallel variables"""
-        project_location  = "$(System.DefaultWorkingDirectory)/scope"
-        matrix = [f"-{idx+1}\n" for idx in range($(parameters.NUM_BATCHES))]
-        print('##vso[task.setvariable variable=MATRIX_VALUES,isoutput=true]{}'.format(matrix))
-    name: passOutput
-
 - job: Build
-  dependsOn: PreBuild
   variables:
     MATRIX_VALUES: $[ dependencies.PreBuild.outputs['passOutput.MATRIX_VALUES'] ]  
   strategy:
-    matrix:
-      ${{ each BATCH_IDX in variables.MATRIX_VALUES }}:
-      Batch${{ BATCH_IDX }}:
-        RUN_NUMBER: ${{ BATCH_IDX }}
-    maxParallel: ${{ parameters.PARALLEL_RUNS }}
+    ${{ insert }}: ${{ parameters.STRATEGY }}
 
   steps:
   - task: UsePythonVersion@0
@@ -80,4 +75,4 @@ jobs:
     inputs:
       scriptSource: 'inline'
       script: |
-        print(f"Running {$(RUN_NUMBER)} / {$(NUM_BATCHES)}")
+        print(f"Running {$(RUN_NUMBER)}")
