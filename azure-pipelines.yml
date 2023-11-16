@@ -46,11 +46,11 @@ parameters:
 jobs:
   - job: Build
     strategy:
-      maxParallel: ${{ parameters.PARALLEL_RUNS }}
       matrix:
-      ${{ each BATCH_IDX in parameters.NUM_BATCHES }}:
-        Batch${{ BATCH_IDX}}:
-          RUN_NUMBER: ${{ BATCH_IDX}}
+        ${{ each BATCH_IDX in parameters.NUM_BATCHES.lit }}:
+        Batch$(BATCH_IDX):
+          RUN_NUMBER: $(BATCH_IDX)
+      maxParallel: ${{ parameters.PARALLEL_RUNS }}
 
     steps:
     - task: UsePythonVersion@0
