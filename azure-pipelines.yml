@@ -44,23 +44,40 @@ parameters:
       - 20
 
 jobs:
-  - job: Build
-    strategy:
-      matrix:
-        ${{ each BATCH_IDX in parameters.NUM_BATCHES.lit }}:
-          Batch${{BATCH_IDX}}:
-            RUN_NUMBER: ${{BATCH_IDX}}
-      maxParallel: ${{ parameters.PARALLEL_RUNS }}
+- job: PreBuild
+  displayName: Prepare test matrix
+  steps:
+  - task: PythonScript@0
+    displayName: 'Export project path'
+    inputs:
+      scriptSource: 'inline'
+      script: |
+        """Set strategy matrix,maxParallel variables"""
+        project_location  = "$(System.DefaultWorkingDirectory)/scope"
+        matrix = [f"-{idx+1}\n" for idx in range($(parameters.NUM_BATCHES))]
+        print('##vso[task.setvariable variable=MATRIX_VALUES,isoutput=true]{}'.format(matrix))
+    name: passOutput
 
-    steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.10'
-      displayName: 'Use Python 3.10'
+- job: Build
+  dependsOn: PreBuild
+  variables:
+    MATRIX_VALUES: $[ dependencies.PreBuild.outputs['passOutput.MATRIX_VALUES'] ]  
+  strategy:
+    matrix:
+      ${{ each BATCH_IDX in variables.MATRIX_VALUES }}:
+      Batch${{ BATCH_IDX }}:
+        RUN_NUMBER: ${{ BATCH_IDX }}
+    maxParallel: ${{ parameters.PARALLEL_RUNS }}
 
-    - task: PythonScript@0
-      displayName: 'Testing variables and parameters'
-      inputs:
-        scriptSource: 'inline'
-        script: |
-          print(f"Running $(RUN_NUMBER) / $(NUM_BATCHES)")
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.10'
+    displayName: 'Use Python 3.10'
+
+  - task: PythonScript@0
+    displayName: 'Testing variables and parameters'
+    inputs:
+      scriptSource: 'inline'
+      script: |
+        print(f"Running {$(RUN_NUMBER)} / {$(NUM_BATCHES)}")
