@@ -48,8 +48,8 @@ jobs:
     strategy:
       matrix:
         ${{ each BATCH_IDX in parameters.NUM_BATCHES.lit }}:
-        Batch$(BATCH_IDX):
-          RUN_NUMBER: $(BATCH_IDX)
+          Batch${{BATCH_IDX}}:
+            RUN_NUMBER: ${{BATCH_IDX}}
       maxParallel: ${{ parameters.PARALLEL_RUNS }}
 
     steps:
