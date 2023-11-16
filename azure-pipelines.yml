@@ -1,0 +1,66 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+parameters:
+  - name: PARALLEL_RUNS
+    type: number
+    displayName: "Number of testing jobs to run in parallel"
+    default: "6"
+    values:
+      - 1
+      - 2
+      - 4
+      - 6
+      - 8
+      - 10
+      - 12
+      - 14
+      - 16
+      - 18
+      - 20
+  - name: NUM_BATCHES
+    type: number
+    displayName: "Number of batches or splits"
+    default: "12"
+    values:
+      - 1
+      - 2
+      - 4
+      - 6
+      - 8
+      - 10
+      - 12
+      - 14
+      - 16
+      - 18
+      - 20
+
+jobs:
+  - job: Build
+    strategy:
+      maxParallel: ${{ parameters.PARALLEL_RUNS }}
+      matrix:
+      ${{ each BATCH_IDX in parameters.NUM_BATCHES }}:
+        Batch${{ BATCH_IDX}}:
+          RUN_NUMBER: ${{ BATCH_IDX}}
+
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.10'
+      displayName: 'Use Python $(python.version)'
+
+    - task: PythonScript@0
+      displayName: 'Testing variables and parameters'
+      inputs:
+        scriptSource: 'inline'
+        script: |
+          print(f"Running $(RUN_NUMBER) / $(NUM_BATCHES)")
